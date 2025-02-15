@@ -1,9 +1,6 @@
-.idea/*
-tests/*
-logs/*
-*.log
-*.tmp
-node_modules/
+.idea/
+tests/
+logs/
 __pycache__/
-*.db            # 忽略数据库文件
-
+data/
+.idea/*
