@@ -41,7 +41,7 @@ Paper Agent 支持抓取以下会议的论文：
 ```bash
 git clone https://github.com/Marverlises/Paper_Agent.git
 cd Paper_Agent
-pip install -
+pip install -r requirements.txt
 ```
 
 项目文件树
