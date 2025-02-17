@@ -26,7 +26,7 @@ class PaperSpider:
         raise NotImplementedError("Subclasses must implement this method.")
 
     @staticmethod
-    def fetch_publications(conf_id):
+    def util_fetch_publications(conf_id):
         """
         获取会议文献数据并可选择存储到本地文件，使用日志记录请求过程。
 
@@ -83,6 +83,6 @@ class PaperSpider:
 
     def fetch_paper_info(self):
         """
-        Fetch paper titles from the conference.
+        Fetch all the paper data from the IJCAI conference.
         """
         raise NotImplementedError("Subclasses must implement this method.")

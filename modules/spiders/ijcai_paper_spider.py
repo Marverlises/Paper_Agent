@@ -18,14 +18,14 @@ class IJCAIPaperSpider(PaperSpider, PaperSQL):
 
     def fetch_paper_info(self):
         """
-        Fetch paper titles from the IJCAI conference.
+        Fetch all the paper data from the IJCAI conference.
         """
         need_conf_id = [(id, year) for year, id in self.year_id_map.items() if year in settings.NEED_YEAR]
         all_paper_data = []
         for item in need_conf_id:
             conference_id = item[0]
             year = item[1]
-            paper_data = self.fetch_publications(conference_id)
+            paper_data = self.util_fetch_publications(conference_id)
             for paper in paper_data:
                 paper['publication']['year'] = year
                 # remove original id
