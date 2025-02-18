@@ -17,6 +17,8 @@ LOG_FILE_PATH = 'logs/agent.log'
 NEED_CONFERENCES_OR_JOURNALS = ['IJCAI']
 # 需要获取的年份
 NEED_YEAR = ['2024']
+# 检索论文时的权重
+SEARCH_WEIGHT = {'title': 0.15, 'abstract': 0.35, 'keywords': 0.5}
 # 爬虫请求延迟，防止被封禁
 DOWNLOAD_DELAY = 2
 # 各个会议的年份对应的网站的ID
