@@ -10,7 +10,7 @@ from torch import Tensor
 from transformers import AutoTokenizer, AutoModel
 
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-
+os.environ['CUDA_VISIBLE_DEVICES'] = '3'
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class RAGRetrieval:
         self.abstracts = []
         self.keywords = []
         self.titles = []
-        self.embeddings = []
+        self.embeddings = {}
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         logger.info(f"Using device: {self.device}")
         self._init_retrieval_weights(search_weight)
@@ -93,7 +93,7 @@ class RAGRetrieval:
             rows = cursor.fetchall()
             conn.close()
             self.titles = [row[0] for row in rows]
-            logger.info(f"Loaded {len(self.titles)} titles from the table '{table_name}'.")
+            logger.info(f"Loaded {len(rows)} titles from the table '{table_name}'.")
         except Exception as e:
             logger.error(f"Error loading titles from database: {e}")
 
@@ -110,7 +110,6 @@ class RAGRetrieval:
     def compute_embeddings(self):
         """
         Compute embeddings for the given column data.
-        :param column_name: Column name for which embeddings need to be computed. Choose from 'abstracts', 'titles', or 'keywords'.
         :return:            None
         """
         try:
@@ -130,11 +129,18 @@ class RAGRetrieval:
 
             # Get the embeddings from the model
             with torch.no_grad():
-                output1 = self.model(**inputs)
-                embeddings = self._last_token_pool(outputs.last_hidden_state, inputs['attention_mask'])
+                output_title = self.model(**input_title)
+                output_abstract = self.model(**input_abstract)
+                output_keywords = self.model(**input_keywords)
+                embeddings_title = self.last_token_pool(output_title.last_hidden_state, output_title['attention_mask'])
+                embeddings_abstract = self.last_token_pool(output_abstract.last_hidden_state,
+                                                           output_abstract['attention_mask'])
+                embeddings_keywords = self.last_token_pool(output_keywords.last_hidden_state,
+                                                           output_keywords['attention_mask'])
 
-            self.embeddings = embeddings.cpu().numpy()  # Convert embeddings to numpy array
-            logger.info(f"Embeddings for {len(self.abstracts)} abstracts computed successfully.")
+            self.embeddings['title'] = embeddings_title.cpu().numpy()
+            self.embeddings['abstract'] = embeddings_abstract.cpu().numpy()
+            self.embeddings['keywords'] = embeddings_keywords.cpu().numpy()
         except Exception as e:
             logger.error(f"Error computing embeddings: {e}")
             raise
@@ -195,7 +201,7 @@ class RAGRetrieval:
 # 8. Main program
 def main():
     db_path = "../data/papers.db"
-    faiss_index_path = "faiss_index.index"
+    faiss_index_path = "../data/faiss_index.index"
     query = "The paper related to image-text retrieval."
 
     try:
