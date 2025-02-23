@@ -8,6 +8,7 @@ import sqlite3
 from config import settings
 from sqlite3 import Error
 from modules.utils import Utils
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -100,10 +101,48 @@ class PaperSQL:
         """
         raise NotImplementedError("This method should be implemented by subclasses")
 
+    def load_column_from_db(self, table_name: str, column_name: str) -> List[str]:
+        """
+        Get all the values of a column from a table in the database.
+        """
+        try:
+            if not self.connection:
+                self.create_connection()
+            cursor = self.connection.cursor()
+            cursor.execute(f"SELECT {column_name} FROM {table_name}")
+            rows = cursor.fetchall()
+            logger.info(f"Loaded {len(rows)} {column_name} from the table '{table_name}'.")
+            return [row[0] for row in rows]
+        except Exception as e:
+            logger.error(f"Error loading {column_name} from database: {e}")
+            raise e
+
 
 if __name__ == '__main__':
-    # 测试删除table
-    paper_sql = PaperSQL(db_file='../data/papers.db')
-    # 查询
-    data = paper_sql.fetch_data('IJCAI_2024')
-    print(data)
+    # # 测试删除table
+    # paper_sql = PaperSQL(db_file='../data/papers.db')
+    # # 查询
+    # data = paper_sql.fetch_data('IJCAI_2024')
+    # print(data)
+
+    import sqlite3
+
+    # 连接到 SQLite 数据库
+    conn = sqlite3.connect('../data/papers.db')
+
+    # 创建一个游标对象
+    cursor = conn.cursor()
+
+    # 执行 SQL 查询，选择 abstract 列
+    cursor.execute("SELECT abstracts FROM IJCAI_2024")
+
+    # 获取查询结果
+    abstracts = cursor.fetchall()
+
+    # 打印查询结果
+    for abstract in abstracts:
+        print(abstract[0])
+
+    # 关闭连接
+    cursor.close()
+    conn.close()

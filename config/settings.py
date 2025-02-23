@@ -18,13 +18,15 @@ NEED_CONFERENCES_OR_JOURNALS = ['IJCAI']
 # 需要获取的年份
 NEED_YEAR = ['2024']
 # 检索论文时的权重
-SEARCH_WEIGHT = {'title': 0.15, 'abstract': 0.35, 'keywords': 0.5}
+SEARCH_WEIGHT = {'title': 0.15, 'abstracts': 0.35, 'keywords': 0.5}
 # 爬虫请求延迟，防止被封禁
 DOWNLOAD_DELAY = 2
 # 各个会议的年份对应的网站的ID
 YEAR_ID_MAP = {'IJCAI': {'2024': '6582a84c261a3c46c0be364a', '2023': '64660edf10d52a2ee199e351',
                          '2022': '61a9949bdcb6d249681bd4f4'}}
-
+# 模型路径
+RAG_MODEL_PATH = '/ai/teacher/mwt/code/by/models/GTE-1.5B'
+LLM_MODEL_PATH = '/ai/teacher/mwt/code/by/models/deepseek-14b'
 # ------------------------------------
 # 2. 数据库配置
 # ------------------------------------

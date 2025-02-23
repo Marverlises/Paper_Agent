@@ -4,6 +4,7 @@
 # @File       : spider_factory.py
 # @Description: PyCharm
 from config import settings
+from modules.paper_sql import PaperSQL
 
 from modules.spiders.acl_paper_spider import ACLPaperSpider
 from modules.spiders.cvpr_paper_spider import CVPRPaperSpider
@@ -17,9 +18,9 @@ class SpiderFactory:
     spiders = []
 
     def __init__(self):
-        self._set_paper_spiders()
+        self.set_paper_spiders()
 
-    def _set_paper_spiders(self, conferences=settings.NEED_CONFERENCES_OR_JOURNALS, year=settings.NEED_YEAR):
+    def set_paper_spiders(self, conferences=settings.NEED_CONFERENCES_OR_JOURNALS, year=settings.NEED_YEAR):
         """
         Factory function to return a list of PaperSpiders based on conference names.
         :param conferences:
@@ -39,6 +40,7 @@ class SpiderFactory:
             else:
                 raise ValueError(f"Unsupported conference: {conference}")
         self.spiders = spiders
+        return spiders
 
     def get_titles(self):
         """

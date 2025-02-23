@@ -8,7 +8,6 @@ import random
 import time
 import requests
 import json
-from lxml import html
 
 
 class Utils:

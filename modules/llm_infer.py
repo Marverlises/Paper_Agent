@@ -18,7 +18,7 @@ class LLMInfer:
             list[dict[str, str | None]]:
         """
         This function is used to generate text from the prompt list.
-        :param prompts:         The list of prompts.
+        :param prompts:             The list of prompts.
         :param model_path:          The path of the model.
         :param generation_config:   The path of the generation config.
         :param sampling_params:     The parameters of sampling.
