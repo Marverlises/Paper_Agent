@@ -27,6 +27,8 @@ YEAR_ID_MAP = {'IJCAI': {'2024': '6582a84c261a3c46c0be364a', '2023': '64660edf10
 # 模型路径
 RAG_MODEL_PATH = '/ai/teacher/mwt/code/by/models/GTE-1.5B'
 LLM_MODEL_PATH = '/ai/teacher/mwt/code/by/models/deepseek-14b'
+# 下载的PDF的保存路径
+PDF_SAVE_PATH = 'data/raw_papers/'
 # ------------------------------------
 # 2. 数据库配置
 # ------------------------------------

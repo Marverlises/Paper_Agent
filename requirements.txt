@@ -1,5 +1,22 @@
-lxml==4.9.3
-Requests==2.32.3
-faiss~=1.8.0
-numpy~=1.23.5
-transformers~=4.46.3
+# Core dependencies
+requests>=2.28.0
+sqlite3>=3.35.0
+lxml>=4.9.0
+pdfplumber>=0.9.0
+md2pdf>=1.0.0
+Pillow>=10.0.0
+PyPDF2>=3.0.0
+
+# LLM-related dependencies
+openai>=1.0.0
+vllm>=0.2.0; platform_system != "Windows"  # vLLM doesn't support Windows yet
+
+# Vector search
+faiss-cpu>=1.7.0  # Use faiss-gpu if GPU is available
+transformers>=4.30.0
+torch>=2.0.0
+sentence-transformers>=2.2.0
+
+# Utility
+tqdm>=4.65.0
+python-dotenv>=1.0.0
