@@ -33,7 +33,7 @@ Paper Agent 支持抓取以下会议/来源的论文：
 
 ### 💻 命令行工具
 
-Paper Agent 提供了强大的命令行工具，包括以下主要功能：
+Paper Agent 包括以下主要功能：
 
 ```bash
 # 抓取论文数据
@@ -194,5 +194,5 @@ Paper_Agent
 
 ### 📄 许可证
 
-本项目采用 MIT 许可证。详情请参见 [LICENSE](LICENSE) 文件。
+本项目采用 Apache License Version 2.0 许可证。详情请参见 [LICENSE](LICENSE) 文件。
 

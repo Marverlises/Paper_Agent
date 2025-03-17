@@ -9,8 +9,6 @@
 # ------------------------------------
 import os
 
-# 代理配置
-os.environ['ALL_PROXY'] = 'http://127.0.0.1:7890'
 # 输出日志的文件路径
 LOG_FILE_PATH = 'logs/agent.log'
 # 目前支持的会议
@@ -18,7 +16,7 @@ NEED_CONFERENCES_OR_JOURNALS = ['IJCAI']
 # 需要获取的年份
 NEED_YEAR = ['2024']
 # 检索论文时的权重
-SEARCH_WEIGHT = {'title': 0.15, 'abstracts': 0.35, 'keywords': 0.5}
+SEARCH_WEIGHT = {'title': 1, 'abstracts': 0.0, 'keywords': 0.0}
 # 爬虫请求延迟，防止被封禁
 DOWNLOAD_DELAY = 2
 # 各个会议的年份对应的网站的ID
@@ -27,8 +25,7 @@ YEAR_ID_MAP = {'IJCAI': {'2024': '6582a84c261a3c46c0be364a', '2023': '64660edf10
 # 模型路径
 RAG_MODEL_PATH = '/ai/teacher/mwt/code/by/models/GTE-1.5B'
 LLM_MODEL_PATH = '/ai/teacher/mwt/code/by/models/deepseek-14b'
-# 下载的PDF的保存路径
-PDF_SAVE_PATH = 'data/raw_papers/'
+
 # ------------------------------------
 # 2. 数据库配置
 # ------------------------------------

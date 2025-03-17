@@ -109,7 +109,7 @@ def download_papers(conferences: List[str], years: List[str], output_dir: Option
         logger.error(f"Error downloading papers: {e}")
         return {}
 
-def search_papers(query: str, top_k: int = 5, method: str = 'rag') -> List[Dict[str, Any]]:
+def search_papers(query: str, top_k: int = 5, method: str = 'rag', search_method: str = 'weighted') -> List[Dict[str, Any]]:
     """
     Search for papers matching a query.
     
@@ -117,6 +117,7 @@ def search_papers(query: str, top_k: int = 5, method: str = 'rag') -> List[Dict[
         query (str): Search query
         top_k (int): Number of results to return
         method (str): Search method ('rag' for semantic search, 'db' for database search)
+        search_method (str): Search method for RAG ('weighted' or 'title')
         
     Returns:
         List[Dict[str, Any]]: Matching papers
@@ -151,7 +152,7 @@ def search_papers(query: str, top_k: int = 5, method: str = 'rag') -> List[Dict[
                     rag.compute_embeddings()
                     rag.create_faiss_index()
                     
-                    similar_papers = rag.get_most_similar_papers(query, top_k=top_k)
+                    similar_papers = rag.get_most_similar_papers(query, top_k=top_k, method=search_method)
                     
                     # Add table info to results
                     for i, paper_info in similar_papers.items():

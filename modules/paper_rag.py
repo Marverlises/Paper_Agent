@@ -9,7 +9,7 @@ from transformers import AutoTokenizer, AutoModel
 from paper_sql import PaperSQL
 
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -230,7 +230,7 @@ class RAGRetrieval:
 def main():
     db_path = "../data/papers.db"
     faiss_index_path = "../data/faiss_index.index"
-    key_words = 'Image-text Retrieval'
+    key_words = 'Image-text matching or image-text retrieval'
     query = f'Given some text, retrieve relevant passages that related to the "{key_words}" task.'
 
     try:
@@ -249,7 +249,7 @@ def main():
         rag_retrieval.persist_faiss_index()
 
         # Get most similar papers
-        similar_papers = rag_retrieval.get_most_similar_papers(query, top_k=3, method='title')
+        similar_papers = rag_retrieval.get_most_similar_papers(query, top_k=10, method='weighted')
 
         # Print most similar papers
         logger.info(f"Most similar papers to the query '{query}':")
