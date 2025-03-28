@@ -11,8 +11,7 @@ import requests
 
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Tuple, Union
-from md2pdf.core import md2pdf
-
+from utils_md2pdf import markdown_to_pdf
 from modules.llm_infer import LLMInfer
 from modules.utils import PDFUtils
 from config import settings
@@ -340,7 +339,7 @@ class PaperProcessor:
             pdf_path = os.path.join(self.output_dir, pdf_filename)
 
             try:
-                md2pdf(pdf_path, md_file_path=md_path, base_url=self.output_dir)
+                markdown_to_pdf(input_file=md_path, output_file=pdf_path, open_pdf=False)
                 logger.info(f"Generated PDF report: {pdf_path}")
                 return pdf_path
             except Exception as e:
@@ -429,10 +428,10 @@ class PaperProcessor:
 
 if __name__ == '__main__':
     # Example usage
-    api_key = 'sk-zk23b25bc0c4f0479b05cb02074e197e2a96786181b4488d'
+    api_key = 'sk-zk270d80164896a09140a020527ff457bda67d7d501f1ad1'
     base_url = 'https://api.zhizengzeng.com/v1'
     model_name = 'grok-2-1212'
     processor = PaperProcessor(api_key=api_key, base_url=base_url, model_name=model_name)
-    pdf_path = "/ai/teacher/mwt/code/by/project/Paper_Agent/pdf_analyzer/test_pdfs/Academic-paper.pdf"
+    pdf_path = "/ai/teacher/mwt/code/by/project/Paper_Agent/data/paper_ICLR.pdf"
     report_path = processor.process_paper(pdf_path)
     print(f"Generated report: {report_path}")
